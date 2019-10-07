@@ -18,11 +18,27 @@ module ring(r1, r2, h) {
     }
 }
 
-module sector(r, a1, a2){
+module sector(r, a1, a2, h){
+    echo([a1:1:a2]);
     points = [
-        for(a = [a1:1:a2) [radius * cos(a), radius * sin(a)]
+        for(a = [a1:1:a2]) [r * cos(a), r * sin(a)]
     ];
+    linear_extrude(h)
     polygon(concat([[0, 0]], points));
+}
+
+module anchors(t){
+    intersection(){
+        ring(
+            r1=BOTTOM_RAD,
+            r2=BUTTON_MID_RAD-SHELL_THICKNESS,
+            h=SHELL_THICKNESS);
+        
+        union(){
+            sector(BOTTOM_RAD, 0, t, SHELL_THICKNESS);
+            sector(BOTTOM_RAD, 180, t+180, SHELL_THICKNESS);
+        }
+    }
 }
 
 module top(){
@@ -37,17 +53,24 @@ module pusher(){
     cylinder(h=PUSHER_HEIGHT, r=PUSHER_RAD);
 }
 
-union(){
-    difference(){
-        top();
-        translate([0,0,-SHELL_THICKNESS])
-        scale([0.95,0.95,0.95])
-        top();
+anchors(50);
+ring(
+    r1=BUTTON_MID_RAD,
+    r2=BUTTON_MID_RAD-SHELL_THICKNESS,
+    h=BUTTON_MID_HEIGHT);
+top();
 
-    }
+//union(){
+//    difference(){
+//        top();
+//        translate([0,0,-SHELL_THICKNESS])
+//        scale([0.95,0.95,0.95])
+//        top();
 
-    pusher();
-}
+//    }
+
+//    pusher();
+//}
 
 //cylinder(h=SHELL_THICKNESS, r=BOTTOM_RAD);
 
