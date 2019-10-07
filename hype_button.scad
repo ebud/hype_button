@@ -1,15 +1,13 @@
 $fn=50;
-
 BUTTON_MID_RAD = 64.5/2;
 BUTTON_MID_HEIGHT = 11;
 BOTTOM_RAD = 71.5/2;
 SHELL_THICKNESS = 1.5;
-
 SIDE_SEGMENT = 24.85;
 PUSHER_HEIGHT = 11;
 PUSHER_RAD = 5;
-
 CURVE_HEIGHT = 7;
+ANCHOR_ANGLE=50;
 
 module ring(r1, r2, h) {
     difference() {
@@ -27,7 +25,7 @@ module sector(r, a1, a2, h){
     polygon(concat([[0, 0]], points));
 }
 
-module anchors(t){
+module anchors(){
     intersection(){
         ring(
             r1=BOTTOM_RAD,
@@ -35,42 +33,37 @@ module anchors(t){
             h=SHELL_THICKNESS);
         
         union(){
-            sector(BOTTOM_RAD, 0, t, SHELL_THICKNESS);
-            sector(BOTTOM_RAD, 180, t+180, SHELL_THICKNESS);
+            sector(BOTTOM_RAD, 0, ANCHOR_ANGLE, SHELL_THICKNESS);
+            sector(BOTTOM_RAD, 180, ANCHOR_ANGLE+180, SHELL_THICKNESS);
         }
     }
 }
 
-module top(){
+module shape(){
     cylinder(h=BUTTON_MID_HEIGHT, r=BUTTON_MID_RAD);
     translate([0,0,BUTTON_MID_HEIGHT])
     resize([0,0,CURVE_HEIGHT*2])
     sphere(r=BUTTON_MID_RAD);
 }
 
+module shell(){
+    difference(){
+        shape();
+        translate([0,0,-SHELL_THICKNESS])
+        scale([0.95,0.95,0.95])
+        shape();
+    }
+} 
+
 module pusher(){
     translate([0,0,CURVE_HEIGHT-1])
     cylinder(h=PUSHER_HEIGHT, r=PUSHER_RAD);
 }
 
-anchors(50);
-ring(
-    r1=BUTTON_MID_RAD,
-    r2=BUTTON_MID_RAD-SHELL_THICKNESS,
-    h=BUTTON_MID_HEIGHT);
-top();
+module hype_button(){
+    anchors();
+    shell();
+    pusher();
+}
 
-//union(){
-//    difference(){
-//        top();
-//        translate([0,0,-SHELL_THICKNESS])
-//        scale([0.95,0.95,0.95])
-//        top();
-
-//    }
-
-//    pusher();
-//}
-
-//cylinder(h=SHELL_THICKNESS, r=BOTTOM_RAD);
-
+hype_button();
