@@ -2,7 +2,7 @@ $fn=50;
 BUTTON_MID_RAD = 64.5/2;
 BUTTON_MID_HEIGHT = 11;
 BOTTOM_RAD = 71.5/2;
-SHELL_THICKNESS = 1.5;
+SHELL_THICKNESS = 2.5;
 SIDE_SEGMENT = 24.85;
 PUSHER_HEIGHT = 11;
 PUSHER_RAD = 5;
@@ -47,10 +47,11 @@ module shape(){
 }
 
 module shell(){
+    d = (BUTTON_MID_RAD-SHELL_THICKNESS)/BUTTON_MID_RAD;
     difference(){
         shape();
         translate([0,0,-SHELL_THICKNESS])
-        scale([0.95,0.95,0.95])
+        scale([d,d,d])
         shape();
     }
 } 
