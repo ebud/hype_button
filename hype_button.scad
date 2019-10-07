@@ -11,6 +11,19 @@ PUSHER_RAD = 5;
 
 CURVE_HEIGHT = 7;
 
+module ring(r1, r2, h) {
+    difference() {
+        cylinder(r = r1, h = h);
+        translate([ 0, 0, -1 ]) cylinder(r = r2, h = h+2);
+    }
+}
+
+module sector(r, a1, a2){
+    points = [
+        for(a = [a1:1:a2) [radius * cos(a), radius * sin(a)]
+    ];
+    polygon(concat([[0, 0]], points));
+}
 
 module top(){
     cylinder(h=BUTTON_MID_HEIGHT, r=BUTTON_MID_RAD);
