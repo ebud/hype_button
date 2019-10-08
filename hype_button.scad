@@ -7,7 +7,7 @@ SIDE_SEGMENT = 24.85;
 PUSHER_HEIGHT = 11;
 PUSHER_RAD = 5;
 CURVE_HEIGHT = 7;
-ANCHOR_ANGLE=50;
+ANCHOR_ANGLE=39;
 
 module ring(r1, r2, h) {
     difference() {
