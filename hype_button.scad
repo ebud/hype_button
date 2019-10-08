@@ -1,4 +1,3 @@
-$fn=50;
 BUTTON_MID_RAD = 64.5/2;
 BUTTON_MID_HEIGHT = 11;
 BOTTOM_RAD = 71.5/2;
@@ -9,6 +8,12 @@ PUSHER_RAD = 5;
 CURVE_HEIGHT = 7;
 ANCHOR_ANGLE=39;
 
+FACETS = 50;
+
+
+$fn=FACETS;
+echo(str("Facets: ", FACETS));
+
 module ring(r1, r2, h) {
     difference() {
         cylinder(r = r1, h = h);
@@ -17,7 +22,6 @@ module ring(r1, r2, h) {
 }
 
 module sector(r, a1, a2, h){
-    echo([a1:1:a2]);
     points = [
         for(a = [a1:1:a2]) [r * cos(a), r * sin(a)]
     ];
@@ -62,9 +66,11 @@ module pusher(){
 }
 
 module hype_button(){
-    anchors();
-    shell();
-    pusher();
+    union(){
+        anchors();
+        shell();
+        pusher();
+    }
 }
 
 hype_button();
