@@ -62,7 +62,8 @@ module shell(){
 } 
 
 module pusher(){
-    translate([0,0,CURVE_HEIGHT-1])
+    t = CURVE_HEIGHT + BUTTON_MID_HEIGHT - PUSHER_HEIGHT-1;
+    translate([0,0, t])
     cylinder(h=PUSHER_HEIGHT, r=PUSHER_RAD);
 }
 
@@ -83,4 +84,3 @@ module hype_button(){
 }
 
 hype_button();
-
