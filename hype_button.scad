@@ -1,12 +1,13 @@
 BUTTON_MID_RAD = 64.5/2;
 BUTTON_MID_HEIGHT = 11;
-BOTTOM_RAD = 71.5/2;
+BOTTOM_RAD = 72.5/2;
 SHELL_THICKNESS = 2.5;
 SIDE_SEGMENT = 24.85;
 PUSHER_HEIGHT = 11;
 PUSHER_RAD = 5;
 CURVE_HEIGHT = 7;
-ANCHOR_ANGLE=39;
+ANCHOR_ANGLE=41;
+LIP_OUTER_RAD=68.75/2;
 
 FACETS = 50;
 
@@ -65,12 +66,21 @@ module pusher(){
     cylinder(h=PUSHER_HEIGHT, r=PUSHER_RAD);
 }
 
+module lip(){
+    ring(
+        r1=LIP_OUTER_RAD,
+        r2=BUTTON_MID_RAD-SHELL_THICKNESS,
+        h=SHELL_THICKNESS);
+}
+
 module hype_button(){
     union(){
         anchors();
         shell();
         pusher();
+        lip();
     }
 }
 
 hype_button();
+
