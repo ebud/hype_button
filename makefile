@@ -1,11 +1,15 @@
-default: renders/hype_button.stl renders/hype_button_w_text.stl
+default: \
+  renders/hype_button.stl \
+	renders/hype_button.png \
+  renders/hype_button_w_text.stl \
+	renders/hype_button_w_text.png
 
-hype_button_w_text.scad: hype_button.scad
+renders/hype_button.stl renders/hype_button.png: hype_button.scad
+	openscad -D 'FACETS=250' --colorscheme=DeepOcean -o $@ $<
 
-renders/%.stl: %.scad
-	openscad -D 'FACETS=250' -o $@ $<
-
+renders/hype_button_w_text.stl renders/hype_button_w_text.png: hype_button.scad
+	openscad -D 'FACETS=250' -D 'TEXT="HYPE"' --colorscheme=DeepOcean -o $@ $<
 
 .PHONY: clean
 clean:
-	rm -r renders/*.stl
+	rm -r renders/*

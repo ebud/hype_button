@@ -11,6 +11,9 @@ LIP_OUTER_RAD=68.75/2;
 
 FACETS = 50;
 
+TEXT="";
+TEXT_SIZE=15;
+
 
 $fn=FACETS;
 echo(str("Facets: ", FACETS));
@@ -83,4 +86,22 @@ module hype_button(){
     }
 }
 
-hype_button();
+module label(){
+    difference(){
+        translate([0,0,13])
+        linear_extrude(15)
+        text(TEXT, halign="center", valign="center", size=TEXT_SIZE);
+        shape();
+    }
+}
+
+module hype_button_w_label(){
+    difference(){
+        hype_button();
+        translate([0,0,-2])
+        label();
+    }
+}
+
+hype_button_w_label();
+
