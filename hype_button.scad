@@ -11,8 +11,9 @@ LIP_OUTER_RAD=68.75/2;
 
 FACETS = 50;
 
-TEXT="";
-TEXT_SIZE=15;
+TEXT="HYPE";
+TEXT_SIZE=70/len(TEXT);
+FONT="Andale Mono:style=Regular";
 
 
 $fn=FACETS;
@@ -90,7 +91,7 @@ module label(){
     difference(){
         translate([0,0,13])
         linear_extrude(15)
-        text(TEXT, halign="center", valign="center", size=TEXT_SIZE);
+        text(TEXT, halign="center", valign="center", size=TEXT_SIZE, font=FONT);
         shape();
     }
 }
